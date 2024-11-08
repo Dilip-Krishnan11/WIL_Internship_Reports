@@ -1,15 +1,12 @@
-\documentclass[12pt,twoside,a4paper,english]{report}
+\documentclass[12pt,oneside,a4paper,english]{article}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage[margin=2.25cm,headheight=26pt,includeheadfoot]{geometry}
 \usepackage[english]{babel}
-\usepackage{listings}
 \usepackage{color}
 \usepackage{titlesec}
-\usepackage{titling}
-\usepackage[framed, numbered]{matlab-prettifier}
 \usepackage{changepage}
-\usepackage{amsmath}
+\usepackage{amsmath} %not sure what this does
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
@@ -30,6 +27,8 @@
 \usepackage{lipsum}
 \usepackage{datetime2}
 \usepackage{minted}
+\usepackage{hyperref}
+\usepackage{tocloft}
 
 
 % --- set footer and header ---
@@ -40,59 +39,110 @@
 \title{COLSim Code Review and Proposal} % to reference as \title, dont use \maketitle
 \makeatletter\let\Title\@title\makeatother
 
-
-\lstset{language=Matlab,
-style=Matlab-editor,
-basicstyle=\normalsize\mlttfamily,
-numbers=left,
-numberstyle={\scriptsize\color{black}},	% size of the numbers
-numbersep=0.5cm											
-}
-
-\newlist{steps}{enumerate}{1}
-\setlist[steps, 1]{leftmargin=1.5cm,label = Step \arabic*:}
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{1pt}
 \renewcommand{\rmdefault}{ptm}
 
-%\lhead{\Title}
+\renewcommand\cftsecfont{\Large\bfseries}
+\renewcommand\cftsubsecfont{\large}
+
+
 \rhead{\nouppercase{\rightmark}}
 \lhead{\Title}
 \lfoot{\includegraphics[height=1.5cm,width=3.5cm]{root/ENSTA-LogoH-COULEUR.png}} % right header logo
 \rfoot{\includegraphics[height=1.3cm]{root/Flinders_University_Logo_Horizontal_RGB_Master.eps}}
 \setlength\headheight{16pt}
 \setlength{\footskip}{80pt}
-\lhead{\Title} %rightH title
 \cfoot{\thepage}
 
 % --- End of page settings ---
 
 
-
 \begin{document}
-\pagenumbering{arabic} 
-\input{sources/0_frontpage.tex}
+
+\pagenumbering{arabic} %set page numbers as arabic numerals
+\fancyfoot[C]{Page \thepage\ of \pageref{EndOfText}} %sets up footer such that it has page count out of total page count
+\hypersetup{hidelinks} %hide hyperlink box outlines for links
+
+% ------ Cover page set up ------
+\begin{titlepage}
+    \begin{center}
+    \vspace{1cm}
+    \begin{minipage}[c]{0.6\linewidth}
+        \centering
+        \includegraphics[width=0.6\linewidth]{root/Flinders_University_Logo_Stacked_RGB_Master.eps}~\\[1cm]
+    \end{minipage}\vspace{0.5cm}
+    \begin{minipage}[c]{0.6\linewidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{root/ENSTA-LogoH-COULEUR.png}~\\[1cm]
+    \end{minipage}
+    \vspace{1cm}
+    
+    % Title
+    \hrule
+    \vspace{.5cm}
+    {\huge \bfseries COLSim Code Review and Proposal} % title of the report
+    \vspace{.5cm}
+    \hrule
+
+    \vspace{1.5cm}
+    
+    \textsc{\textbf{Author}}\\
+    \vspace{.5cm}
+    \centering
+
+    %author details
+    Dilip Krishnan\\
+    FAN: Kris0119\\
+    Student Number: 2219841\\
+    
+    \vspace{4cm}
+    
+    \centering \today % see latexmkrc for time zone change
+    \end{center}
+    \end{titlepage}
+
+% ------ End of Cover Page ------
 
 \newpage
-%\doublespacing
-%\addcontentsline{toc}{section}{Table of Contents}
-%\renewcommand{\baselinestretch}{1}\normalsize
+\doublespacing
 \tableofcontents
-%\renewcommand{\baselinestretch}{1}\normalsize
-%\singlespacing
+%\addcontentsline{toc}{section}{Table of Contents}
+\renewcommand{\baselinestretch}{1}\normalsize
+\singlespacing
 \thispagestyle{fancy} % force page style
 
 \newpage
-\pagenumbering{roman}
-T%fancyfoot[C]{Page \thepage\ of \pageref{EndOfText}}
 
-\section{Introduction} \label{ch1}
-\input{sources/1_introduction.tex} 
+% ------ Introduction ------
 
-\label{EndOfText}
+\section{Introduction}
+% \input{sources/1_introduction.tex} - Potentially use to abstract out sections for easier editing 
+\lipsum[2-5]
+
+% ------ Needs and Requirements ------
+\newpage
+\section{Needs and Requirements}
+\lipsum[4]
+
+\subsection{Needs of the Project}
+\lipsum[5]
+
+\subsection{Requirements of the Project}
+\lipsum[6-7]
+
+% ------ Code Review ------
+\newpage
+\section{Code Review}
+\lipsum[8]
+
+% ------ Proposal ------
+\newpage
+\section{Proposal}
+\lipsum[10]
+
 
 \newpage
-\pagenumbering{arabic} 
 \addcontentsline{toc}{section}{List of Figures}
 %\fancyfoot[C]{Page \thepage\ of \pageref{endOfDoc}}
 \listoffigures
@@ -105,15 +155,59 @@ T%fancyfoot[C]{Page \thepage\ of \pageref{EndOfText}}
 
 \newpage
 \addcontentsline{toc}{section}{Nomenclature}
-\input{sources/9_nomenclat.tex}
+%\input{sources/9_nomenclat.tex}
+\makenomenclature
+%\clearpage
+%\mbox{}
+
+\nomenclature{EV}{Electric Vehicle}
+\nomenclature{AC}{Alternating Current}
+\nomenclature{DC}{Direct Current}
+\nomenclature{IGBT}{Insulated-gate Bipolar Transistor}
+\nomenclature{PV}{Photovoltaics}
+\nomenclature{RMS}{Root Mean Square}
+\nomenclature{FCS}{Fast Charging Station}
+\nomenclature{PMU}{Phase Measurement Unit}
+\nomenclature{THD}{Total Harmonic Distortion}
+\nomenclature{EMI}{Electromagnetic Interference}
+\nomenclature{$h$}{Planck constant}
+ 
+\printnomenclature
+
+% \newpage
+% \addcontentsline{toc}{section}{References}
+% \bibliography{document.bib} 
+% \bibliographystyle{ieeetr}
 
 \newpage
-\addcontentsline{toc}{section}{References}
-\bibliography{document.bib} 
-\bibliographystyle{ieeetr}
+\section{Appendix A}
 
-\newpage
-\section{Appendix A} \label{ch6}
-
-\label{endOfDoc}
+\label{EndOfText}
 \end{document}
+
+% --- Code for future reference ---
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width = 0.2\textwidth ]{figures/tex.png}
+%     \caption{Benny The Beaver.} 
+%     %\cite{benny_history}
+%     % \label{fig:bennyb}
+% \end{figure}
+
+%\autoref{fig:bennyb}
+
+% \begin{table}[H]
+%     \centering
+%     \caption{That is a table.}
+%     \begin{tabular}{|c|c|c|}
+%     \centering
+%     \textbf{Lorem} & \textbf{Ipsum} & \textbf{Lorem [\$]} \\ \hline \hline
+% 1   & lipsum    & lorem     \\ \hline   
+% 2   & lipsum    & lorem   \\ \hline
+% 3   & lipsum    & lorem  
+%     \end{tabular}
+%     \label{tab:table1}
+% \end{table}
+
+%\autoref{tab:table1}
